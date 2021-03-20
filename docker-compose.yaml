@@ -1,0 +1,9 @@
+version: '3.4'
+services:
+  client-api:
+    image: hallysonh/client-sample-api
+    container_name: client-sample-api
+    environment:
+      - apiKey=xTQCkVJGWlIDQ0g1JMFMMj8tUyLdNX09
+    ports:
+      - 3000:3000
