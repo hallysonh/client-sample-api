@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
+@Api(value = "Client", tags = "Client")
 public class ClientController {
     private final ClientService service;
 
@@ -20,6 +21,7 @@ public class ClientController {
     }
 
     @GetMapping("/client")
+    @ApiOperation(value = "List clients filtered by provided params")
     public ResponseEntity<List<Client>> getClientList(
             @RequestParam(required = false) String query,
             @RequestParam(name = "birth-date-start", required = false) LocalDate birthDateStart,
@@ -31,21 +33,25 @@ public class ClientController {
     }
 
     @PostMapping("/client")
+    @ApiOperation(value = "Create client")
     public Client addClient(@RequestBody Client client) {
         return service.save(client);
     }
 
     @GetMapping("/client/{id}")
+    @ApiOperation(value = "Retrieve client by ID")
     public Client getClientById(@PathVariable Long id) {
         return service.getById(id);
     }
 
     @PutMapping("/client/{id}")
+    @ApiOperation(value = "Update client")
     public Client updateClient(@PathVariable Long id, @RequestBody Client newClient) {
         return service.update(id, newClient);
     }
 
     @DeleteMapping("/client/{id}")
+    @ApiOperation(value = "Delete client")
     public void deleteClient(@PathVariable Long id) {
         service.delete(id);
     }
