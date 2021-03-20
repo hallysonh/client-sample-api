@@ -44,23 +44,16 @@ public class ClientService {
         repository.deleteById(id);
     }
 
-    public ResponseEntity<List<Client>> getList(
+    public Page<Client> getList(
             String query,
             LocalDate birthDateStart,
             LocalDate birthDateEnd,
             Boolean activated,
             Pageable pageable
     ) {
-        Page<Client> page = repository.findByQueryAndBirthDatePeriodAndActivated(
-                query, birthDateStart, birthDateEnd, activated, pageable
-        );
-
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("X-Total", Long.toString(page.getTotalElements()));
-
-        return ResponseEntity.ok()
-                .headers(responseHeaders)
-                .body(page.getContent());
+        final String sqlQuery = query != null && !query.isBlank() ? "%" + query + "%" : null;
+        return repository.findByQueryAndBirthDatePeriodAndActivated(
+                sqlQuery, birthDateStart, birthDateEnd, activated, pageable);
     }
 
     private <T> T nvl(T a, T b) {

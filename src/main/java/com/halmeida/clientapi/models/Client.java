@@ -1,8 +1,10 @@
 package com.halmeida.clientapi.models;
 
 import com.sun.istack.NotNull;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -25,8 +27,9 @@ public class Client {
     @NotNull
     private LocalDate birthDate;
     private Boolean activated = true;
-    @CreatedDate
-    private Date createdAt = new Date();
+    @Column(updatable = false)
+    @CreationTimestamp
+    private Date createdAt;
 
     public Client() {
     }

@@ -4,7 +4,9 @@ import com.halmeida.clientapi.models.Client;
 import com.halmeida.clientapi.service.ClientService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +31,14 @@ public class ClientController {
             @RequestParam(required = false) Boolean activated,
             Pageable pageable
     ) {
-        return service.getList(query, birthDateStart, birthDateEnd, activated, pageable);
+        Page<Client> page = service.getList(query, birthDateStart, birthDateEnd, activated, pageable);;
+
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("X-Total", Long.toString(page.getTotalElements()));
+
+        return ResponseEntity.ok()
+                .headers(responseHeaders)
+                .body(page.getContent());
     }
 
     @PostMapping("/client")
