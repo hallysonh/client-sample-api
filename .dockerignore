@@ -6,5 +6,6 @@ docs
 build
 .idea
 .gradle
+.github
 README.md
 gradle\
