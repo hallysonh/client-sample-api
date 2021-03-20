@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 @SpringBootApplication
+@EnableConfigurationProperties(AppProperties.class)
 public class ClientApiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ClientApiApplication.class, args);
